@@ -97,7 +97,7 @@ public class GlitchLabel: UILabel {
         let channelsImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return channelsImage
+        return channelsImage!
     }
     
     private func getScanlineImage(channelsImage: UIImage) -> UIImage {
@@ -108,7 +108,7 @@ public class GlitchLabel: UILabel {
         let context = UIGraphicsGetCurrentContext()
         
         
-        let provider: CGDataProviderRef = CGImageGetDataProvider(channelsImage.CGImage)!
+        let provider: CGDataProviderRef = CGImageGetDataProvider(channelsImage.CGImage!)!
         let data: NSData = CGDataProviderCopyData(provider)!
         let bytes = data.bytes
         let bytePointer = UnsafePointer<UInt8>(bytes)
@@ -119,14 +119,14 @@ public class GlitchLabel: UILabel {
             let red = bytePointer[offset+1]
             let green = bytePointer[offset+2]
             let blue = bytePointer[offset+3]
-            CGContextSetRGBFillColor(context, CGFloat(red), CGFloat(green), CGFloat(blue), CGFloat(alpha))
-            CGContextFillRect(context, CGRectMake(CGFloat(col), y2, 1, 0.5))
+            CGContextSetRGBFillColor(context!, CGFloat(red), CGFloat(green), CGFloat(blue), CGFloat(alpha))
+            CGContextFillRect(context!, CGRectMake(CGFloat(col), y2, 1, 0.5))
         }
         
         let scanlineImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return scanlineImage
+        return scanlineImage!
     }
     
     private func getRedImage(rect: CGRect) -> UIImage {
@@ -136,7 +136,7 @@ public class GlitchLabel: UILabel {
             NSForegroundColorAttributeName: UIColor.redColor()
             ])
         
-        let redImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        let redImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
         return redImage
@@ -148,7 +148,7 @@ public class GlitchLabel: UILabel {
             NSFontAttributeName: UIFont.init(name: font.fontName, size: font.pointSize)!,
             NSForegroundColorAttributeName: UIColor.greenColor()
             ])
-        let greenImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        let greenImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
         return greenImage
@@ -161,7 +161,7 @@ public class GlitchLabel: UILabel {
             NSForegroundColorAttributeName: UIColor.blueColor()
             ])
         
-        let blueImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        let blueImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
         return blueImage
