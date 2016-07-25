@@ -132,7 +132,7 @@ public class GlitchLabel: UILabel {
     private func getRedImage(rect: CGRect) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(rect.size, false, UIScreen.mainScreen().scale)
         text?.drawInRect(rect, withAttributes: [
-            NSFontAttributeName: UIFont.init(name: font.fontName, size: font.pointSize)!,
+            NSFontAttributeName: UIFont(name: font.fontName, size: font.pointSize)!,
             NSForegroundColorAttributeName: UIColor.redColor()
             ])
         
@@ -145,7 +145,7 @@ public class GlitchLabel: UILabel {
     private func getGreenImage(rect: CGRect) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(rect.size, false, UIScreen.mainScreen().scale)
         text?.drawInRect(rect, withAttributes: [
-            NSFontAttributeName: UIFont.init(name: font.fontName, size: font.pointSize)!,
+            NSFontAttributeName: UIFont(name: font.fontName, size: font.pointSize)!,
             NSForegroundColorAttributeName: UIColor.greenColor()
             ])
         let greenImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
@@ -157,7 +157,7 @@ public class GlitchLabel: UILabel {
     private func getBlueImage(rect: CGRect) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(rect.size, false, UIScreen.mainScreen().scale)
         text?.drawInRect(rect, withAttributes: [
-            NSFontAttributeName: UIFont.init(name: font.fontName, size: font.pointSize)!,
+            NSFontAttributeName: UIFont(name: font.fontName, size: font.pointSize)!,
             NSForegroundColorAttributeName: UIColor.blueColor()
             ])
         
@@ -167,7 +167,10 @@ public class GlitchLabel: UILabel {
         return blueImage
     }
     
-    @objc private func tick() {
+    func tick(sender:NSTimer) {
+        if superview == nil {
+            sender.invalidate()
+        }
         phase += phaseStep
         if phase > 1 {
             phase = 0
@@ -180,10 +183,10 @@ public class GlitchLabel: UILabel {
     
     private func setTimer() {
         let timer = NSTimer(timeInterval: 1/30.0,
-                           target: self,
-                           selector: #selector(GlitchLabel.tick),
-                           userInfo: nil,
-                           repeats: true)
+                            target: self,
+                            selector: #selector(GlitchLabel.tick(_:)),
+                            userInfo: nil,
+                            repeats: true)
         
         NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
     }
